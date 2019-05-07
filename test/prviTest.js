@@ -1,5 +1,5 @@
 var zahteva = require('supertest')
-var streznik = require('streznik.js')
+var streznik = require('../streznik.js')
 
 
 describe('Začetna stran', function() {
