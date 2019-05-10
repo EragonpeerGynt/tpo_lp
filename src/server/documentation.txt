@@ -1,3 +1,4 @@
+ADDITIONAL INSTALLS
+pip install pyopenssl
 START SERVER:
-PS--> $env:FLASK_APP = "hello.py"
-PS--> python -m flask run
+terminal$ python server.py
