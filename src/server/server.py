@@ -1,18 +1,23 @@
 from flask import *
-import index as IND
 import os
-import calendar_app
+from dbase import database
+import sys
+import logging
+
+from calendar_app import app as calendar_app
+
 app = Flask(__name__)
 
-
+app.register_blueprint(calendar_app, url_prefix = '/calendar')
 
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template("index.html")
-@app.route('/calendar/add')
-def koledar():
-    return render_template("calendar_conf.html")
+
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080, debug=True, ssl_context='adhoc')
+    #localhost version
+    #app.run(host='127.0.0.1', port=8080, debug=True, ssl_context='adhoc')
+    #c9/server config
+    app.run(debug=True, host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))

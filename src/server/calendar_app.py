@@ -1,7 +1,49 @@
-def add():
-    html_background = open("html_files/index.html")
-    html_file = open("html_files/calendar_conf.html","r")
-    html_file = html_background.read().replace("<!--WINDOW-->", html_file.read())
-    csser = open("static/style/styl.css", "r")
-    html_file = html_file.replace("/*STYLE*/", csser.read())
-    return html_file
+from flask import *
+import os
+import datetime
+from dbase import database
+import sys
+import logging
+
+app = Blueprint('calendar_app', __name__)
+
+@app.route('/add')
+def koledar():
+    return render_template("calendar_add.html", date="2019-05-11")
+    
+@app.route('/add/confirm')
+def koledar_potrdi_prazen():
+    return render_template("index.html")
+ 
+@app.route('/add/confirm', methods=['post']) 
+def koledar_potrdi():
+    if request.form.get("continue") == "cancel":
+        return redirect(url_for("index"))
+        
+    elif request.form.get('continue') == "Save changes":
+        
+        naziv = request.form.get('title')
+        opis = request.form.get('description')
+        trajanje = request.form.get('duration')
+        zacetekTH = request.form.get('timeH')
+        zacetekTM = request.form.get('timeM')
+        zacetekD = request.form.get('date')
+        zacetekD = zacetekD.split("-")
+        idU = '3'
+        zacetek = datetime.datetime(int(zacetekD[0]), int(zacetekD[1]), int(zacetekD[2]), int(zacetekTH), int(zacetekTM))
+        zacetek = zacetek.strftime('%Y-%m-%d %H:%M')
+        
+        db = database.dbcon()
+        cur = db.cursor()
+        current_app.logger.error((naziv, opis, trajanje, zacetek, idU))
+        dat =  (naziv, opis, trajanje, zacetek, idU)
+        query = 'INSERT INTO `vnosKoledar` (naziv, opis, trajanje, zacetek, idU) VALUES (%s, %s, %s, %s, %s);'
+        cur.execute(query, dat)
+        db.commit()
+        cur.close()
+        
+        return redirect(url_for("index"))
+        
+    else:
+        #dodaj za error screen
+        return redirect(url_for("index"))
