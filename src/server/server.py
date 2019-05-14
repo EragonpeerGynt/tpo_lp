@@ -6,11 +6,13 @@ import sys
 import logging
 
 from calendar_app import app as calendar_app
+from urnik_app import app as urnik_app
 
 app = Flask(__name__)
 app.secret_key=os.urandom(16)
 
 app.register_blueprint(calendar_app, url_prefix = '/calendar')
+app.register_blueprint(urnik_app, url_prefix = '/urnik')
 
 @app.route('/')
 @app.route('/index')
