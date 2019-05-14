@@ -5,8 +5,9 @@
 
 <div id=front_window>
     <h3>Urnik element</h3>
-    <form action="{{ url_for('urnik_app.urnik_potrdi') }}" method="post">
-        <input type="hidden" name="date" value="{{ date }}">
+    <form action="{{ url_for('urnik_app.urnik_posodobi_vnos') }}" method="post">
+        <input type="hidden" name="date" value='{{ date }}'>
+        <input type="hidden" name="id_urnik" value='{{ id_urnik }}'>
         Name: <input type="text" name="title" require/><br/>
         Day: <input type="text" name="day" require/><br/>
         Time: <input type="number" name="timeH" min="0" max="23" require/><br/>
