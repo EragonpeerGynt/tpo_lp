@@ -1,0 +1,4 @@
+ADDITIONAL INSTALLS
+pip install pyopenssl
+START SERVER:
+terminal$ python server.py

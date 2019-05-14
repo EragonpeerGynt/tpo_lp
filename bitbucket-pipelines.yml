@@ -1,11 +1,21 @@
+# Za okolje lahko uporabimo poljuben Docker, ki je na voljo na
+# Docker Hub <https://hub.docker.com/>
 image: node:6.9.4
+
+# Za posredovanje produkcijske različice aplikacije na Heroku
+# moramo izvesti celostno kloniranje
+clone:
+  depth:
+    full
 
 pipelines:
   branches:
+    # Ko posredujemo uveljavitev na vejo razvoja `production` se
+    # izvede neprekinjena postavitev (CD), ki izvede vse teste
+    # in posreduje aplikacijo na Heroku
     produkcijska:
       - step:
           caches:
             - node
           script:
-            - npm install
-            - npm test
+            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_PRODUCTION.git production:master
