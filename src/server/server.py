@@ -17,17 +17,6 @@ app.register_blueprint(todo_app, url_prefix = '/todo')
 app.register_blueprint(urnik_app, url_prefix = '/urnik')
 app.register_blueprint(users_app, url_prefix = '')
 
-@app.route('/')
-@app.route('/index')
-def index():
-    session['id_u'] = 3
-    return render_template("index.html")
-
-
-if __name__ == '__main__':
-    #localhost version
-    #app.run(host='127.0.0.1', port=8080, debug=True, ssl_context='adhoc')
-    #c9/server config
 
 @app.route('/')
 @app.route('/index')
