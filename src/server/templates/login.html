@@ -1,0 +1,23 @@
+{% extends  "index.html" %}
+{% block overlay %}
+
+<form action="{{ url_for('users.vpis') }}" method="POST" id="log_in_obrazec">
+    <b><font size="5">LOG IN</font></b><br>
+    
+    <div id="napaka" style="display:none;">{{ napaka }}</div>
+    Elektronski naslov:<br>
+    <input type="text" id="uporabnisko" name="uporabnisko" placeholder="Elektronski naslov" required><br>
+    Geslo:<br>
+    <input type="text" id="geslo" name="geslo" placeholder="Geslo" required><br>
+    
+    <button type="submit">Potrdi</button>
+    
+    <script>
+        //prikaz obvestila, ce je bla napaka
+        var napaka = "{{ napaka }}"
+        if (napaka.localeCompare("") != 0) {
+            document.getElementById('napaka').style.display = "block";
+        }
+    </script>
+
+{% endblock %}
