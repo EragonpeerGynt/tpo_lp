@@ -1,7 +1,7 @@
 {% extends  "index.html" %}
 {% block overlay %}
 
-<form action="{{ url_for('users.vpis') }}" method="POST" id="log_in_obrazec">
+<form action="{{ url_for('users_app.vpis') }}" method="POST" id="log_in_obrazec">
     <b><font size="5">LOG IN</font></b><br>
     
     <div id="napaka" style="display:none;">{{ napaka }}</div>
