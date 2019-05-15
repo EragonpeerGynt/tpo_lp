@@ -7,9 +7,9 @@ import logging
 
 app = Blueprint('calendar_app', __name__)
 
-@app.route('/add')
-def koledar():
-    return render_template("calendar_add.html", date="2019-05-11")
+@app.route('/add/<date>')
+def koledar(date):
+    return render_template("calendar_add.html", date=date)
     
 @app.route('/add/confirm')
 def koledar_potrdi_prazen():
