@@ -6,4 +6,4 @@ pipelines:
     produkcijska:
       - step:
           script:
-            - git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_PRODUCTION.git production:master
+            - git push -f https://heroku:$HEROKU_API_KEY@https://git.heroku.com/$HEROKU_PRODUCTION.git production:master
