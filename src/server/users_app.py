@@ -46,7 +46,7 @@ def izpis():
     obvestilo = ""
     return render_template("login.html", napaka=obvestilo)
  
-@app.route('/login', methods = ['GET', 'POST']) 
+@app.route('/login', methods = ['POST']) 
 def vpis():
     obvestilo=""
     uporabnisko = request.form['uporabnisko']
@@ -87,3 +87,7 @@ def vpis():
     session['id_u'] = idU
             
     return redirect(url_for("index"))
+    
+@app.route('/login')
+def vpis_zacetni():
+    return render_template("login.html")
