@@ -1,5 +1,5 @@
-{% extends  "index.html" %}
-{% block overlay %}
+<!DOCTYPE html>
+<html>
 
 <form action="{{ url_for('users_app.registracija') }}" method="POST" id="register_obrazec">
     <b><font size="5">REGISTRACIJA</font></b><br>
@@ -19,5 +19,7 @@
             document.getElementById('napaka').style.display = "block";
         }
     </script>
-
-{% endblock %}
+<br>
+Ste že registrirani?
+<button onclick="location.href = 'url_for('users_app.vpis')';">Prijavi se</button>
+</html>
