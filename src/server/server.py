@@ -6,6 +6,8 @@ import sys
 import logging
 
 from calendar_app import app as calendar_app
+from urnik_app import app as urnik_app
+from todo_app import app as todo_app
 
 app = Flask(__name__)
 
