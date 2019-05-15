@@ -11,6 +11,7 @@ from todo_app import app as todo_app
 from users_app import app as users_app
 
 app = Flask(__name__)
+app.secret_key='qohaevjiobsnerrrre'
 
 app.register_blueprint(calendar_app, url_prefix = '/calendar')
 app.register_blueprint(todo_app, url_prefix = '/todo')
