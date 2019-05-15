@@ -1,0 +1,20 @@
+{% extends  "index.html" %}
+{% block overlay %}
+
+<div id=shade></div>
+
+<div id=front_window>
+    <h3>Urnik element</h3>
+    <form action="{{ url_for('urnik_app.urnik_posodobi_vnos') }}" method="post">
+        <input type="hidden" name="date" value='{{ date }}'>
+        <input type="hidden" name="id_urnik" value='{{ id_urnik }}'>
+        Name: <input type="text" name="title" require/><br/>
+        Day: <input type="text" name="day" require/><br/>
+        Time: <input type="number" name="timeH" min="0" max="23" require/><br/>
+        Duration: <input type="number" name="duration" require/><br/>
+        Color: <input type="text" name="color" require/><br/>
+        
+        <input type="submit" name="continue" value="cancel"/>
+        <input type="submit" name="continue" value="Save changes">
+</div>
+{% endblock %}
