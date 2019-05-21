@@ -120,3 +120,48 @@ def koledar_posodobi_vnos():
     else:
         #dodaj za error screen
         return redirect(url_for("index"))
+        
+@app.route('/delete/<id_calendar>')
+def koledar_brisanje(id_calendar):
+    idU = session['id_u']
+    
+    db = database.dbcon()
+    cur = db.cursor()
+    current_app.logger.error((id_calendar, idU))
+    dat = (id_calendar, idU)
+    
+    query = 'SELECT * FROM vnosKoledar WHERE id = %s AND idU = %s'
+    cur.execute(query, dat)
+    
+    if len(cur.fetchall()) == 0:
+        cur.close()
+        return redirect(url_for("index"))
+    
+    return render_template("calendar_delete.html", id_calendar=id_calendar)
+    
+@app.route('/delete', methods=['post'])
+def koledar_potrdi_brisanje():
+    if request.form.get("continue") == "cancel":
+        return redirect(url_for("index"))
+    elif request.form.get('continue') == "Confirm":
+        id_calendar = request.form.get('id_calendar')
+        idU = session['id_u']
+        
+        db = database.dbcon()
+        cur = db.cursor()
+        current_app.logger.error((id_calendar, idU))
+        dat = (id_calendar, idU)
+        
+        query = 'SELECT * FROM vnosKoledar WHERE id = %s AND idU = %s'
+        cur.execute(query, dat)
+        
+        if len(cur.fetchall()) == 0:
+            cur.close()
+            return redirect(url_for("index"))
+        
+        query = 'DELETE FROM vnosKoledar WHERE id = %s AND idU = %s'
+        cur.execute(query, dat)
+        db.commit()
+        cur.close()
+        
+        return redirect(url_for("index"))
