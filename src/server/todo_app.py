@@ -100,3 +100,58 @@ def todo_posodobi_vnos():
     else:
         #dodaj za error screen
         return redirect(url_for("index"))
+        
+        
+        
+@app.route('/delete/<id_todo>')
+def todo_izbrisi(id_todo):
+    db = database.dbcon()
+    cur = db.cursor()
+    query = 'SELECT * FROM `vnosTODO` WHERE id = %s AND idU = %s'
+    try:
+        dat = (id_todo, session['id_u'])
+    except:
+        return redirect(url_for("index"))
+    cur.execute(query, dat)
+    
+    event = cur.fetchall()
+    cur.close
+    current_app.logger.error(event)
+    
+    if len(event) != 0:
+        event = event[0]
+        current_app.logger.error(event)
+        
+        vsebina = request.form.get('content')
+        
+        idU = str(session['id_u'])
+        
+        return render_template("todo_delete.html", id_todo=id_todo, content=vsebina)
+        
+    else:
+        return redirect(url_for("index"))
+        
+@app.route('/delete/confirm', methods=['post'])
+def todo_izbrisi_vnos():
+    if request.form.get("continue") == "cancel":
+        return redirect(url_for("index"))
+    elif request.form.get('continue') == "Delete":
+        id_todo = request.form.get('id_todo')
+        vsebina = request.form.get('content')
+        idU = str(session['id_u'])
+        
+        db = database.dbcon()
+        cur = db.cursor()
+        current_app.logger.error((vsebina, idU))
+        dat = (vsebina, idU)
+        #DELETE FROM TABLE_NAME WHERE id = SOMEVALUE
+        query = 'DELETE FROM `vnosTODO` WHERE id = %s AND idU = %s'
+        cur.execute(query, dat)
+        db.commit()
+        cur.close()
+        
+        return redirect(url_for("index"))
+        
+    else:
+        #dodaj za error screen
+        return redirect(url_for("index"))
