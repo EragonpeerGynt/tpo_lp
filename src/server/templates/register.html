@@ -6,11 +6,14 @@
     
     <div id="napaka" style="display:none;">{{ napaka }}</div>
     Elektronski naslov:<br>
-    <input type="text" id="mail" name="mail" placeholder="Elektronski naslov" required><br>
+    <input type="text" name="mail" placeholder="Elektronski naslov"><br>
     Geslo (vsaj 8 znakov):<br>
-    <input type="text" id="geslo" name="geslo" placeholder="Geslo" required><br>
+    <input type="text" name="geslo" placeholder="Geslo"><br>
     
-    <button type="submit">Potrdi</button>
+    <input type="submit" name="knof" value="Potrdi"/><br>
+    
+    Ste že registrirani?
+    <input type="submit" name="knof" value="Prijavi se"/>
     
     <script>
         //prikaz obvestila, ce je bla napaka
@@ -20,6 +23,5 @@
         }
     </script>
 <br>
-Ste že registrirani?
-<button onclick="location.href = 'url_for('users_app.vpis')';">Prijavi se</button>
+
 </html>
