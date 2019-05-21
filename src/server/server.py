@@ -22,7 +22,6 @@ app.register_blueprint(users_app, url_prefix = '')
 @app.route('/')
 @app.route('/index')
 def index():
-    session['id_u'] = 3
     return render_template("index.html")
 
 
