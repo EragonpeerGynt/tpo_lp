@@ -42,3 +42,12 @@
     border: rgba(0,0,0,1);
     border-radius: 10px;
 }
+
+.smallw {
+    
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height:150px;
+    
+}

@@ -75,14 +75,14 @@ def vpis():
     cur = db.cursor()
     
     #pogledamo, ce obstaja, in uzamemo se geslo
-    table = 'SELECT COUNT(*) FROM Uporabnik where mail=%s;'
+    table = 'SELECT geslo, id, potrjen FROM Uporabnik where mail = %s;'
     cur.execute(table, (uporabnisko, ))
-    records = cur.fetchone()
+    records = cur.fetchall()
     
-    st_takih=1
+    st_takih = 1
     
     try:
-        st_takih= records[0]
+        st_takih= len(records)
     except:
         st_takih= 0
     
@@ -90,11 +90,6 @@ def vpis():
     if st_takih == 0:
         obvestilo="Ta elektronski naslov se ni registriran."
         return render_template("login.html", napaka=obvestilo)
-    
-    #ce je tak
-    table = 'SELECT geslo, id FROM Uporabnik where mail=%s;'
-    cur.execute(table, (uporabnisko, ))
-    records = cur.fetchone()
     
     cur.close();
     
