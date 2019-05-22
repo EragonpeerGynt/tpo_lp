@@ -67,6 +67,10 @@ def izpis():
  
 @app.route('/login', methods = ['POST']) 
 def vpis():
+    
+    if request.form['knof'] == "Registriraj se":
+        return redirect(url_for('users_app.registracija'))
+    
     obvestilo=""
     uporabnisko = request.form['uporabnisko']
     geslo = request.form['geslo']
@@ -108,4 +112,5 @@ def vpis():
     
 @app.route('/login')
 def vpis_zacetni():
-    return render_template("login.html")
+    obvestilo=""
+    return render_template("login.html", napaka=obvestilo)
