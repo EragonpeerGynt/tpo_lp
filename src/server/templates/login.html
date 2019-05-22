@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
 
-<form action="{{ url_for('users_app.vpis') }}" method="POST" id="log_in_obrazec">
-    <b><font size="5">LOG IN</font></b><br>
+<form action="{{ url_for('users_app.vpis') }}" method="POST" id="vpis_obrazec">
+    <b><font size="5">PRIJAVA</font></b><br>
     
     <div id="napaka" style="display:none;">{{ napaka }}</div>
     Elektronski naslov:<br>
-    <input type="text" id="uporabnisko" name="uporabnisko" placeholder="Elektronski naslov" required><br>
+    <input type="text" name="uporabnisko" placeholder="Elektronski naslov"><br>
     Geslo:<br>
-    <input type="text" id="geslo" name="geslo" placeholder="Geslo" required><br>
+    <input type="text" name="geslo" placeholder="Geslo"><br>
     
-    <button type="submit">Potrdi</button>
+    <input type="submit" name="knof" value="Potrdi"/><br>
+    
+    Še niste registrirani?
+    <input type="submit" name="knof" value="Registriraj se"/>
     
     <script>
         //prikaz obvestila, ce je bla napaka
@@ -19,9 +22,6 @@
             document.getElementById('napaka').style.display = "block";
         }
     </script>
-
 <br>
-Še niste registrirani?
-<button onclick="location.href = 'url_for('users_app.registracija')';">Registriraj se</button>
 
 </html>
