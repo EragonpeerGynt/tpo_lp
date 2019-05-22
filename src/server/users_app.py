@@ -1,6 +1,7 @@
 from flask import *
 from flask_mail import Mail
 from flask_mail import Message
+from validate_email import validate_email
 import os
 import datetime
 from dbase import database
@@ -16,6 +17,12 @@ def registracija():
     obvestilo=""
     uporabnisko = request.form['mail']
     geslo = request.form['geslo']
+    
+    is_valid = validate_email(uporabnisko)
+    
+    if is_valid == None:
+        obvestilo="Elektronski naslov ni veljaven."
+        return render_template("register.html", napaka=obvestilo)
     
     #if geslo=="" or uporabnisko=="":
      #   obvestilo="Prosim vpisite vse podatke."
