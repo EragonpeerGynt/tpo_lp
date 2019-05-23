@@ -8,6 +8,7 @@ from dbase import database
 import sys
 import logging
 import re
+import hashlib
 
 app = Blueprint('users_app', __name__)
 
@@ -55,7 +56,16 @@ def registracija():
     cur.close()
     
     #naredimo vsebino emaila
+    now = datetime.datetime.now()
+    leto= str(now.year)
+    mesec= str(now.month)
+    dan= str(now.day)
     
+    vsebina= uporabnisko+leto+mesec+dan
+    
+    hesh=hashlib.md5(vsebina).hexdigest()
+    
+    sporocilo = url_for('users_app.preveri')+uporabnisko+"<>"+hesh
     
     obvestilo="Na vnesen elektronski naslov smo poslali sporocilo za potrditev registracije. Registracijo morate potrditi v dveh dnevih."
     
@@ -65,6 +75,59 @@ def registracija():
 def regist():
     obvestilo=""
     return render_template("register.html", napaka=obvestilo)
+    
+@app.route('/preveri/<nekaj>')
+def preveri(nekaj):
+    obvestilo=""
+    
+    hesh=nekaj
+    
+    uporabnisko, hesh=hesh.split("<>")
+    
+    now = datetime.datetime.now()
+    leto= str(now.year)
+    mesec= str(now.month)
+    dan= str(now.day)
+    
+    danes= leto+mesec+dan
+    
+    vceraj= date.today() - timedelta(days=1)
+    letoV= str(vceraj.year)
+    mesecV= str(vceraj.month)
+    danV= str(vceraj.day)
+    
+    vceraj= letoV+mesecV+danV
+    
+    vceraj2= date.today() - timedelta(days=2)
+    letoP= str(vceraj2.year)
+    mesecP= str(vceraj2.month)
+    danP= str(vceraj2.day)
+    
+    predvcernjem= letoP+mesecP+danP
+    
+    vsebina1=uporabnisko+danes
+    vsebina2= uporabnisko+vceraj
+    vsebina3= uporabnisko+predvcernjem
+    
+    hesh1=hashlib.md5(vsebina1).hexdigest()
+    hesh2=hashlib.md5(vsebina2).hexdigest()
+    hesh3=hashlib.md5(vsebina3).hexdigest()
+    
+    if hesh1 == hesh or hesh1 == hesh or hesh1 == hesh:
+        
+        db = database.dbcon()
+        cur = db.cursor()
+        query = 'UPDATE `Uporabnik` SET potrjen = %s WHERE mail = %s;'
+        cur.execute(query, (1, uporabnisko, ))
+        db.commit()
+        cur.close()
+        
+        obvestilo="Uspesno ste potrdili registracijo."
+    else:
+        obvestilo="Registracije niste potrdili pravocasno."
+        
+    
+    return render_template("preverjanje.html", napaka=obvestilo)
     
 @app.route('/logout')
 def izpis():
