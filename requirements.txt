@@ -1,2 +1,7 @@
 Flask
 gunicorn
+flask_mail
+sys
+os
+pyopenssl
+logging
