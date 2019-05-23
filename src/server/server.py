@@ -24,6 +24,8 @@ app.register_blueprint(users_app, url_prefix = '')
 def index():
     return render_template("index.html")
 
+def heroku_star():
+    app.run(debug=True, use_reloader=True)
 
 if __name__ == '__main__':
     #localhost version
