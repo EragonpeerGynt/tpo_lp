@@ -1,18 +1,16 @@
-from flask import *
-import os
-import sys
-import logging
-
+from flask import Flask
+from datetime import datetime
 app = Flask(__name__)
-app.secret_key='qohaevjiobsnerrrre'
 
 @app.route('/')
-@app.route('/index')
-def index():
-    return "hello world"
+def homepage():
+    the_time = datetime.now().strftime("%A, %d %b %Y %l:%M %p")
+
+    return """
+    <h1>Hello heroku</h1>
+    <p>It is currently {time}.</p>
+    <img src="http://loremflickr.com/600/400" />
+    """.format(time=the_time)
 
 if __name__ == '__main__':
-    #localhost version
-    #app.run(host='127.0.0.1', port=8080, debug=True, ssl_context='adhoc')
-    #c9/server config
-    app.run(debug=True, host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 33507)))
+app.run(debug=True, use_reloader=True)
