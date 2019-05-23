@@ -117,15 +117,35 @@ def preveri(nekaj):
         
         db = database.dbcon()
         cur = db.cursor()
+        
+        stavek = 'SELECT count(*) from `Uporabnik` where mail=%s and potrjen=%s;'
+        cur.execute(stavek, (uporabnisko, 1, ))
+        preveri=cur.fetchall()
+        
+        poglej=1
+        
+        try:
+            poglej=preveri[0]
+        except:
+            poglej=0
+            
+        if poglej != 0:
+            obvestilo="Ta elektronski naslov je ze bil potrjen."
+            return render_template("preverjanje.html", napaka=obvestilo)
+        
         query = 'UPDATE `Uporabnik` SET potrjen = %s WHERE mail = %s;'
         cur.execute(query, (1, uporabnisko, ))
         db.commit()
         cur.close()
         
         obvestilo="Uspesno ste potrdili registracijo."
+        return render_template("preverjanje.html", napaka=obvestilo)
+        
     else:
         obvestilo="Registracije niste potrdili pravocasno."
         
+    if request.form['knof'] == "Prijavi se":
+        return redirect(url_for('users_app.vpis'))
     
     return render_template("preverjanje.html", napaka=obvestilo)
     
