@@ -3,3 +3,4 @@ gunicorn
 flask_mail
 pyopenssl
 logging
+MySQLdb
