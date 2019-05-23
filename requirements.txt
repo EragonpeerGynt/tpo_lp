@@ -1,6 +1,5 @@
 Flask
 gunicorn
 flask_mail
-os
 pyopenssl
 logging
