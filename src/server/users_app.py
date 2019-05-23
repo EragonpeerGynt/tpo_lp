@@ -1,12 +1,13 @@
 from flask import *
-from flask_mail import Mail
-from flask_mail import Message
-from validate_email import validate_email
+#from flask_mail import Mail
+#from flask_mail import Message
+#from validate_email import validate_email
 import os
 import datetime
 from dbase import database
 import sys
 import logging
+import re
 
 app = Blueprint('users_app', __name__)
 
@@ -18,15 +19,11 @@ def registracija():
     uporabnisko = request.form['mail']
     geslo = request.form['geslo']
     
-    is_valid = validate_email(uporabnisko)
     
-    if is_valid == None:
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", uporabnisko):
         obvestilo="Elektronski naslov ni veljaven."
         return render_template("register.html", napaka=obvestilo)
     
-    #if geslo=="" or uporabnisko=="":
-     #   obvestilo="Prosim vpisite vse podatke."
-      #  return render_template("register.html", napaka=obvestilo)
     
     if len(geslo) < 8:
         obvestilo="Geslo je prekratko."
@@ -56,6 +53,9 @@ def registracija():
     cur.execute(query, (uporabnisko, geslo, 0, 0))
     db.commit()
     cur.close()
+    
+    #naredimo vsebino emaila
+    
     
     obvestilo="Na vnesen elektronski naslov smo poslali sporocilo za potrditev registracije. Registracijo morate potrditi v dveh dnevih."
     
