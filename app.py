@@ -5,4 +5,4 @@ serverdir = os.path.join(dirname, "src", "server")
 sys.path.append(serverdir)
 import server
 
-server.heroku_start()
+#server.heroku_start()
