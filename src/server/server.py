@@ -21,11 +21,14 @@ app.register_blueprint(users_app, url_prefix = '')
 
 @app.route('/')
 @app.route('/index')
+
+
+
 def index():
     return render_template("index.html")
 
-#def heroku_start():
-    #app.run(debug=True, use_reloader=True)
+def heroku_start():
+    return app
 
 if __name__ == '__main__':
 #    #localhost version
@@ -33,3 +36,5 @@ if __name__ == '__main__':
 #    #c9/server config
     app.run(debug=True, host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 8080)))
 #    app.run(debug=True, use_reloader=True)
+
+
