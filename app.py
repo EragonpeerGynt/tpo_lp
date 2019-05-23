@@ -26,11 +26,8 @@ app.register_blueprint(users_app, url_prefix = '')
 
 @app.route('/')
 @app.route('/index')
-
-
-
 def index():
-    return render_template("index.html")
+    return render_template("./src/server/template/index.html")
 
 #def heroku_start():
     #app.run(debug=True, use_reloader=True)
