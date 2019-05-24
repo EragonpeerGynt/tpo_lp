@@ -1,0 +1,6 @@
+Flask
+gunicorn
+flask_mail
+pyopenssl
+logging
+Flask-MySQLdb
