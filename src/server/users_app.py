@@ -1,11 +1,14 @@
 from flask import *
-from flask_mail import Mail
-from flask_mail import Message
+#from flask_mail import Mail
+#from flask_mail import Message
+#from validate_email import validate_email
 import os
 import datetime
 from dbase import database
 import sys
 import logging
+import re
+import hashlib
 
 app = Blueprint('users_app', __name__)
 
@@ -17,9 +20,11 @@ def registracija():
     uporabnisko = request.form['mail']
     geslo = request.form['geslo']
     
-    #if geslo=="" or uporabnisko=="":
-     #   obvestilo="Prosim vpisite vse podatke."
-      #  return render_template("register.html", napaka=obvestilo)
+    
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", uporabnisko):
+        obvestilo="Elektronski naslov ni veljaven."
+        return render_template("register.html", napaka=obvestilo)
+    
     
     if len(geslo) < 8:
         obvestilo="Geslo je prekratko."
@@ -50,6 +55,18 @@ def registracija():
     db.commit()
     cur.close()
     
+    #naredimo vsebino emaila
+    now = datetime.datetime.now()
+    leto= str(now.year)
+    mesec= str(now.month)
+    dan= str(now.day)
+    
+    vsebina= uporabnisko+leto+mesec+dan
+    
+    hesh=hashlib.md5(vsebina).hexdigest()
+    
+    sporocilo = url_for('users_app.preveri')+uporabnisko+"<>"+hesh
+    
     obvestilo="Na vnesen elektronski naslov smo poslali sporocilo za potrditev registracije. Registracijo morate potrditi v dveh dnevih."
     
     return render_template("register.html", napaka=obvestilo)
@@ -58,6 +75,79 @@ def registracija():
 def regist():
     obvestilo=""
     return render_template("register.html", napaka=obvestilo)
+    
+@app.route('/preveri/<nekaj>')
+def preveri(nekaj):
+    obvestilo=""
+    
+    hesh=nekaj
+    
+    uporabnisko, hesh=hesh.split("<>")
+    
+    now = datetime.datetime.now()
+    leto= str(now.year)
+    mesec= str(now.month)
+    dan= str(now.day)
+    
+    danes= leto+mesec+dan
+    
+    vceraj= date.today() - timedelta(days=1)
+    letoV= str(vceraj.year)
+    mesecV= str(vceraj.month)
+    danV= str(vceraj.day)
+    
+    vceraj= letoV+mesecV+danV
+    
+    vceraj2= date.today() - timedelta(days=2)
+    letoP= str(vceraj2.year)
+    mesecP= str(vceraj2.month)
+    danP= str(vceraj2.day)
+    
+    predvcernjem= letoP+mesecP+danP
+    
+    vsebina1=uporabnisko+danes
+    vsebina2= uporabnisko+vceraj
+    vsebina3= uporabnisko+predvcernjem
+    
+    hesh1=hashlib.md5(vsebina1).hexdigest()
+    hesh2=hashlib.md5(vsebina2).hexdigest()
+    hesh3=hashlib.md5(vsebina3).hexdigest()
+    
+    if hesh1 == hesh or hesh1 == hesh or hesh1 == hesh:
+        
+        db = database.dbcon()
+        cur = db.cursor()
+        
+        stavek = 'SELECT count(*) from `Uporabnik` where mail=%s and potrjen=%s;'
+        cur.execute(stavek, (uporabnisko, 1, ))
+        preveri=cur.fetchall()
+        
+        poglej=1
+        
+        try:
+            poglej=preveri[0]
+        except:
+            poglej=0
+            
+        if poglej != 0:
+            obvestilo="Ta elektronski naslov je ze bil potrjen."
+            return render_template("preverjanje.html", napaka=obvestilo)
+        
+        query = 'UPDATE `Uporabnik` SET potrjen = %s WHERE mail = %s;'
+        cur.execute(query, (1, uporabnisko, ))
+        db.commit()
+        cur.close()
+        
+        obvestilo="Uspesno ste potrdili registracijo."
+        return render_template("preverjanje.html", napaka=obvestilo)
+        
+    else:
+        obvestilo="Registracije niste potrdili pravocasno."
+        
+    if request.form['knof'] == "Prijavi se":
+        return redirect(url_for('users_app.vpis'))
+    
+    return render_template("preverjanje.html", napaka=obvestilo)
     
 @app.route('/logout')
 def izpis():
