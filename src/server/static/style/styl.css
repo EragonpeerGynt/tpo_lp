@@ -84,7 +84,23 @@
     top: 70px;
     margin-top: 10px;
     background-color: rgb(255, 255, 255);
-    height: 50%;
+    bottom: 45%;
+    margin-bottom:10px;
+    
+}
+
+#urnik {
+    
+    position: absolute;
+    right: 50%;
+    left: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
+    top: 55%;
+    margin-top: 10;
+    background-color: rgb(255, 255, 255);
+    bottom: 0px;
+    margin-bottom: 10px;
     
 }
 
