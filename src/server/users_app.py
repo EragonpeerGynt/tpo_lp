@@ -2,6 +2,8 @@ from flask import *
 #from flask_mail import Mail
 #from flask_mail import Message
 #from validate_email import validate_email
+import smtplib
+from email import message
 import os
 import datetime
 from dbase import database
@@ -14,6 +16,17 @@ app = Blueprint('users_app', __name__)
 
 @app.route('/register', methods=['POST'])
 def registracija():
+    
+    #preverimo, da nihce ni prijavljen
+    id_U=0
+    try:
+        id_U = session['id_u']
+    except:
+        id_U = -1
+        
+    if id_U == -1:
+        return redirect(url_for("index"))
+    
     if request.form['knof'] == "Prijavi se":
         return redirect(url_for('users_app.vpis'))
     obvestilo=""
@@ -65,7 +78,38 @@ def registracija():
     
     hesh=hashlib.md5(vsebina).hexdigest()
     
-    sporocilo = url_for('users_app.preveri')+uporabnisko+"<>"+hesh
+    sporocilo = url_for('users_app.preveri2',  _external=True)+"/"+uporabnisko+"<>"+hesh
+    
+    #naredimo mail
+    from_addr = 'info.straightas@yandex.com'
+    to_addr = uporabnisko
+    subject = 'Registracija pri StraightAs'
+    body = 'Pozdrav. Pred kratkim je bila opravljena registracija na strani StraightAs. Tukaj je link za potrditev registracije: '+sporocilo
+    
+    msg = message.Message()
+    msg.add_header('from', from_addr)
+    msg.add_header('to', to_addr)
+    msg.add_header('subject', subject)
+    msg.set_payload(body)
+    
+    current_app.logger.error("Naredimo sporocilo")
+    current_app.logger.error(body)
+    
+    server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
+    
+    current_app.logger.error("Povezemo na server")
+    
+    server.login(from_addr, 'sk072019')
+    
+    current_app.logger.error("Posljemo login informacije")
+    
+    #server.send_message(msg, from_addr=from_addr, to_addrs=[to_addr])
+    
+    server.sendmail(from_addr, to_addr, msg.as_string())
+    
+    current_app.logger.error("Posljemo sporocilo")
+    
+    server.quit()
     
     obvestilo="Na vnesen elektronski naslov smo poslali sporocilo za potrditev registracije. Registracijo morate potrditi v dveh dnevih."
     
@@ -75,6 +119,10 @@ def registracija():
 def regist():
     obvestilo=""
     return render_template("register.html", napaka=obvestilo)
+    
+@app.route('/preveri')
+def preveri2():
+    return redirect(url_for("index"))
     
 @app.route('/preveri/<nekaj>')
 def preveri(nekaj):
