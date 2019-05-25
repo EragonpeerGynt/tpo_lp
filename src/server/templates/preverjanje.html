@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<form action="{{ url_for('users_app.vpis') }}" id="potrditev_obrazec">
+    <div id="napaka" style="display:none;">{{ napaka }}</div>
+    
+    <input type="submit" name="knof" value="Prijavi se."/>
+    
+    <script>
+        //prikaz obvestila, ce je bla napaka
+        var napaka = "{{ napaka }}"
+        if (napaka.localeCompare("") != 0) {
+            document.getElementById('napaka').style.display = "block";
+        }
+    </script>
+<br>
+
+</html>
