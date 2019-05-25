@@ -6,6 +6,7 @@ import smtplib
 from email import message
 import os
 import datetime
+from datetime import timedelta
 from dbase import database
 import sys
 import logging
@@ -81,7 +82,8 @@ def registracija():
     sporocilo = url_for('users_app.preveri2',  _external=True)+"/"+uporabnisko+"<>"+hesh
     
     #naredimo mail
-    from_addr = 'info.straightas@yandex.com'
+    #from_addr = 'info.straightas@yandex.com'
+    from_addr = 'info.starightas@gmail.com'
     to_addr = uporabnisko
     subject = 'Registracija pri StraightAs'
     body = 'Pozdrav. Pred kratkim je bila opravljena registracija na strani StraightAs. Tukaj je link za potrditev registracije: '+sporocilo
@@ -92,22 +94,22 @@ def registracija():
     msg.add_header('subject', subject)
     msg.set_payload(body)
     
-    current_app.logger.error("Naredimo sporocilo")
-    current_app.logger.error(body)
+    #current_app.logger.error("Naredimo sporocilo")
+    #current_app.logger.error(body)
     
-    server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     
-    current_app.logger.error("Povezemo na server")
+    #current_app.logger.error("Povezemo na server")
     
-    server.login(from_addr, 'sk072019')
+    server.login(from_addr, 'tpo072019')
     
-    current_app.logger.error("Posljemo login informacije")
+    #current_app.logger.error("Posljemo login informacije")
     
     #server.send_message(msg, from_addr=from_addr, to_addrs=[to_addr])
     
     server.sendmail(from_addr, to_addr, msg.as_string())
     
-    current_app.logger.error("Posljemo sporocilo")
+    #current_app.logger.error("Posljemo sporocilo")
     
     server.quit()
     
@@ -128,6 +130,16 @@ def preveri2():
 def preveri(nekaj):
     obvestilo=""
     
+    #preverimo, da nihce ni prijavljen
+    id_U=0
+    try:
+        id_U = session['id_u']
+    except:
+        id_U = -1
+        
+    if id_U == -1:
+        return redirect(url_for("index"))
+    
     hesh=nekaj
     
     uporabnisko, hesh=hesh.split("<>")
@@ -139,14 +151,14 @@ def preveri(nekaj):
     
     danes= leto+mesec+dan
     
-    vceraj= date.today() - timedelta(days=1)
+    vceraj= datetime.date.today() - timedelta(days=1)
     letoV= str(vceraj.year)
     mesecV= str(vceraj.month)
     danV= str(vceraj.day)
     
     vceraj= letoV+mesecV+danV
     
-    vceraj2= date.today() - timedelta(days=2)
+    vceraj2= datetime.date.today() - timedelta(days=2)
     letoP= str(vceraj2.year)
     mesecP= str(vceraj2.month)
     danP= str(vceraj2.day)
@@ -161,28 +173,25 @@ def preveri(nekaj):
     hesh2=hashlib.md5(vsebina2).hexdigest()
     hesh3=hashlib.md5(vsebina3).hexdigest()
     
-    if hesh1 == hesh or hesh1 == hesh or hesh1 == hesh:
+    current_app.logger.error(('zunanji if', hesh1, hesh2, hesh3, hesh))
+    
+    if hesh1 == hesh or hesh2 == hesh or hesh3 == hesh:
         
         db = database.dbcon()
         cur = db.cursor()
         
-        stavek = 'SELECT count(*) from `Uporabnik` where mail=%s and potrjen=%s;'
-        cur.execute(stavek, (uporabnisko, 1, ))
+        stavek = 'SELECT id from `Uporabnik` where mail=%s and potrjen=%s;'
+        cur.execute(stavek, (uporabnisko, '1', ))
         preveri=cur.fetchall()
         
-        poglej=1
+        current_app.logger.error(('notranji if', preveri))
         
-        try:
-            poglej=preveri[0]
-        except:
-            poglej=0
-            
-        if poglej != 0:
+        if len(preveri) != 0:
             obvestilo="Ta elektronski naslov je ze bil potrjen."
             return render_template("preverjanje.html", napaka=obvestilo)
         
         query = 'UPDATE `Uporabnik` SET potrjen = %s WHERE mail = %s;'
-        cur.execute(query, (1, uporabnisko, ))
+        cur.execute(query, ('1', uporabnisko, ))
         db.commit()
         cur.close()
         
