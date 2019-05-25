@@ -1,14 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/styl.css') }}">
-<title>StraightAs</title>
-</head>
-<body>
+<!--status bar-->
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-</body>
-{% block overlay %}
+{% extends "status_bar.html" %}
+{% block body %}
+
+
+<!--koledar-->
+{% include "koledar_w.html" %}
+{% block koledar %}
 {% endblock %}
-</html> 
+<!--urnik-->
+{% include "todo_w.html" %}
+{% block todo %}
+{% endblock %}
+
+<!--todo-->
+
+{% block overlay %}
+
+{% endblock %}
+{% endblock %}
