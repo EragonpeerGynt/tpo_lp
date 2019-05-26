@@ -27,7 +27,12 @@ def koledar_pomoc():
 
 @app.route('/add/<date>')
 def koledar(date):
-    return render_template("calendar_add.html", date=date)
+    try:
+        user = session['id_u']
+        return render_template("calendar_add.html", date=date)
+    except:
+        return redirect(url_for("index"))
+    
     
 @app.route('/add/confirm')
 def koledar_potrdi_prazen():
@@ -40,16 +45,19 @@ def koledar_potrdi():
         
     elif request.form.get('continue') == "Save changes":
         
-        naziv = request.form.get('title')
-        opis = request.form.get('description')
-        trajanje = request.form.get('duration')
-        zacetekTH = request.form.get('timeH')
-        zacetekTM = request.form.get('timeM')
-        zacetekD = request.form.get('date')
-        zacetekD = zacetekD.split("-")
-        idU = str(session['id_u'])
-        zacetek = datetime.datetime(int(zacetekD[0]), int(zacetekD[1]), int(zacetekD[2]), int(zacetekTH), int(zacetekTM))
-        zacetek = zacetek.strftime('%Y-%m-%d %H:%M')
+        try:
+            naziv = request.form.get('title')
+            opis = request.form.get('description')
+            trajanje = request.form.get('duration')
+            zacetekTH = request.form.get('timeH')
+            zacetekTM = request.form.get('timeM')
+            zacetekD = request.form.get('date')
+            zacetekD = zacetekD.split("-")
+            idU = session['id_u']
+            zacetek = datetime.datetime(int(zacetekD[0]), int(zacetekD[1]), int(zacetekD[2]), int(zacetekTH), int(zacetekTM))
+            zacetek = zacetek.strftime('%Y-%m-%d %H:%M')
+        except:
+            return redirect(url_for("index"))
         
         db = database.dbcon()
         cur = db.cursor()
@@ -126,6 +134,14 @@ def koledar_posodobi_vnos():
         cur.close()
         
         return redirect(url_for("index"))
+        
+    elif request.form.get('continue') == "delete":
+        try:
+            id_calendar = request.form.get('id_calendar')
+        except:
+            return redirect(url_for("index"))
+            
+        return redirect( url_for('calendar_app.koledar_brisanje', id_calendar=id_calendar) )
         
     else:
         #dodaj za error screen
