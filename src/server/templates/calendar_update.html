@@ -4,8 +4,10 @@
 <div id=shade></div>
 
 <div id=front_window>
-    <h3>Calendar event</h3>
-    <form action="{{ url_for('calendar_app.koledar_posodobi_vnos') }}" method="post">
+    <div class=top_border>
+        <h3>Calendar event</h3>
+    </div>
+    <form action="{{ url_for('calendar_app.koledar_posodobi_vnos') }}" method="post" class="top_border_margin">
         <input type="hidden" name="date" value='{{ date }}'>
         <input type="hidden" name="id_calendar" value='{{ id_calendar }}'>
         Name: <input type="text" name="title" value='{{ title }}' require/><br/>
@@ -13,8 +15,11 @@
         Duration: <input type="number" name="duration" value='{{ duration }}' require/><br/>
         Description:<br/>
         <textarea rows="10" cols="60" name="description" require>{{ description }}</textarea><br/>
-        
+        <div class="window--knofi">
+        <input type="submit" name="continue" value="delete"/>
         <input type="submit" name="continue" value="cancel"/>
         <input type="submit" name="continue" value="Save changes">
+        </div>
+    </form>
 </div>
 {% endblock %}
