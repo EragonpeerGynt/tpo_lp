@@ -1,0 +1,40 @@
+{% block sredina %}
+
+<div class=tabula>
+    
+    <div class="zavihek" onclick="location.href ='{{ url_for("index") }}';">
+        
+        <div class="popravek 
+        {% if request.url == url_for('index', _external=True) %}
+        marked_t
+        {% endif %}
+        ">Home</div>
+    </div>
+    
+    <div class="zavihek crta" onclick="location.href ='{{ url_for("index") }}';">
+        <div class="popravek 
+        {% if request.url == "" %}
+        marked_t
+        {% endif %}
+        ">Food</div>
+    </div>
+    
+    <div class="zavihek crta" onclick="location.href ='{{ url_for("index") }}';">
+        <div class="popravek 
+        {% if request.url == url_for('event_app.zacetna_stran', _external=True) %}
+        marked_t
+        {% endif %}
+        ">Events</div>
+    </div>
+    
+    <div class="zavihek crta" onclick="location.href ='{{ url_for("index") }}';">
+        <div class="popravek 
+        {% if request.url == "" %}
+        marked_t
+        {% endif %}
+        ">Bus</div>
+    </div>
+    
+</div>
+
+{% endblock %}
