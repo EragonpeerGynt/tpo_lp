@@ -4,15 +4,19 @@
 <div id=shade></div>
 
 <div id=front_window>
+    <div class=top_border>
     <h3>Event</h3>
-    <form action="{{ url_for('event_app.dodaj_dogodek') }}" method="post">
+    </div>
+    <form action="{{ url_for('event_app.dodaj_dogodek') }}" method="post" class="top_border_margin">
         Name: <input type="text" name="name" placeholder="ime dogodka" require/><br/>
         Date: <input type="date" name="date" require><br/>
         Organizer: <input type="text" name="organizer" placeholder="ime organizatorja" require/><br/>
         Description:<br/>
         <textarea rows="10" cols="60" name="description" require></textarea><br/>
-        
+        <div class="window--knofi">
         <input type="submit" name="continue" value="cancel"/>
         <input type="submit" name="continue" value="Save changes">
+        </div>
+    </form>
 </div>
 {% endblock %}

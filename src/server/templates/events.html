@@ -1,13 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/styl.css') }}">
-<title>Event maneger</title>
-</head>
-<body>
+{% extends "status_bar.html" %}
+{% block body %}
 
-<h1>dogodki tukaj</h1>
-</body>
+<div id=event--platno>
+    {% for item in podatki_dogodki %}
+        <div class=dogodek_koledar>
+            {{ item.naziv }}<br>{{ item.datum }}
+        </div>
+    {% else %}
+        <div class=dogodek_koledar>V koledarju nimate še nobenega vnosa</div>
+    {% endfor %}
+</div>
+
+{% if status != 0 %}
+<div id="nov_dogodek" onclick="location.href ='{{ url_for("event_app.vnesi_podatke_nov") }}';">
+    
+</div>
+{% endif %}
+
 {% block overlay %}
 {% endblock %}
-</html> 
+
+{% endblock %}
