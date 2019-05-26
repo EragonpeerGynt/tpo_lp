@@ -63,9 +63,12 @@ def registracija():
         obvestilo="Ta elektronski naslov je ze registriran."
         return render_template("register.html", napaka=obvestilo)
         
-        
+    
+    #hesiramo geslo
+    gesloo=hashlib.md5(geslo).hexdigest()
+    
     query = 'INSERT INTO `Uporabnik` (mail, geslo, status, potrjen) VALUES (%s, %s, %s, %s)'
-    cur.execute(query, (uporabnisko, geslo, 0, 0))
+    cur.execute(query, (uporabnisko, gesloo, 0, 0))
     db.commit()
     cur.close()
     
@@ -134,7 +137,17 @@ def regist():
     
 @app.route('/preveri')
 def preveri2():
-    return redirect(url_for("index"))
+    
+    id_U=-1
+    try:
+        id_U = session['id_u']
+    except:
+        id_U = -1
+        
+    if id_U != -1:
+        return redirect(url_for("index"))
+    
+    return redirect(url_for('users_app.vpis'))
     
 @app.route('/preveri/<nekaj>')
 def preveri(nekaj):
@@ -242,6 +255,8 @@ def vpis():
     uporabnisko = request.form['uporabnisko']
     geslo = request.form['geslo']
     
+    gesloo=hashlib.md5(geslo).hexdigest()
+    
     current_app.logger.error(uporabnisko);
     
     db = database.dbcon()
@@ -259,7 +274,7 @@ def vpis():
         return render_template("login.html", napaka=obvestilo)
     
     table = 'SELECT id FROM Uporabnik where mail = %s and geslo = %s and potrjen = %s;'
-    cur.execute(table, (uporabnisko, geslo, '1', ))
+    cur.execute(table, (uporabnisko, gesloo, '1', ))
     records = cur.fetchall()
     
     cur.close();
