@@ -10,6 +10,7 @@
 <div id=ozadje>
 
 <div id=toolbar>
+    
     <div class="dropdown" style="float:right;">
     <div class=dropbtn>
     <img src="{{ url_for('static', filename='resource/profile.png') }}" class="profile_icon"></img>
@@ -19,6 +20,15 @@
         <a href="{{ url_for('users_app.izpis') }}">Odjava</a>
         </div>
     </div>
+    
+    {% include "menjava_zavihkov.html" %}
+    {% block sredina %}
+    {% endblock %}
+    
+    <div id=ime_app>
+        StraightAS
+    </div>
+    
 </div>
 
 
