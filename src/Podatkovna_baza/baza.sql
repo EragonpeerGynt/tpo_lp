@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS `Uporabnik`;
 CREATE TABLE `Uporabnik` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `mail` varchar(30) NOT NULL,
-  `geslo` varchar(30) NOT NULL,
+  `geslo` varchar(40) NOT NULL,
   `status` int(1) NOT NULL,
   `potrjen` int(1) NOT NULL,
   PRIMARY KEY (`id`)
