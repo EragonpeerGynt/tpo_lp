@@ -1,20 +1,25 @@
-<!DOCTYPE html>
-<html>
+{% extends  "status_bar.html" %}
+{% block body %}
 
-<form action="{{ url_for('users_app.registracija') }}" method="POST" id="register_obrazec">
-    <b><font size="5">REGISTRACIJA</font></b><br>
+<div id=shade></div>
+
+<div id= okno>
+
+<form action="{{ url_for('users_app.registracija') }}" method="POST">
+    <b><font size="5">REGISTRACIJA</font></b><br><br>
     
     <div id="napaka" style="display:none;">{{ napaka }}</div>
-    Elektronski naslov:<br>
-    <input type="text" name="mail" placeholder="Elektronski naslov"><br>
-    Geslo (vsaj 8 znakov):<br>
-    <input type="text" name="geslo" placeholder="Geslo"><br>
+    Elektronski naslov:
+    <input type="text" name="mail" class=odgovor placeholder="Elektronski naslov" ><br>
+    Geslo (vsaj 8 znakov):
+    <input type="password" name="geslo" class=odgovor placeholder="Geslo"><br>
     
-    <input type="submit" name="knof" value="Potrdi"/><br>
+    <input type="submit" name="knof" class=mainButtons value="Potrdi"/><br><br>
     
-    Ste že registrirani?
-    <input type="submit" name="knof" value="Prijavi se"/>
-    
+    <div>Ste že registrirani?</div>
+    <input type="submit" name="knof" class=sideButtons value="Prijavi se"/>
+    <br>
+</form>
     <script>
         //prikaz obvestila, ce je bla napaka
         var napaka = "{{ napaka }}"
@@ -22,6 +27,6 @@
             document.getElementById('napaka').style.display = "block";
         }
     </script>
-<br>
 
-</html>
+</div>
+{% endblock %}

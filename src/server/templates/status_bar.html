@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/styl.css') }}">
+<title>StraightAS</title>
+</head>
+<body>
+    
+<div id=ozadje>
+
+<div id=toolbar>
+    <img src="{{ url_for('static', filename='resource/profile.png') }}" class=profile_icon></img>
+</div>
+
+
+
+{% block body %}
+{% endblock %}
+
+</div>
+
+</body>
+
+</html> 
