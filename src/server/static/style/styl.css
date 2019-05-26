@@ -51,3 +51,140 @@
     height:150px;
     
 }
+
+#toolbar {
+    
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 70px;
+    background-color: rgb(179, 236, 255);
+    
+}
+
+.profile_icon {
+    
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 50px;
+    width: 50px;
+    
+    
+}
+
+#koledar {
+    
+    position: absolute;
+    right: 50%;
+    left: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
+    top: 70px;
+    margin-top: 10px;
+    background-color: rgb(255, 255, 255);
+    bottom: 45%;
+    margin-bottom:10px;
+    
+}
+
+#urnik {
+    
+    position: absolute;
+    right: 50%;
+    left: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
+    top: 55%;
+    margin-top: 10;
+    background-color: rgb(255, 255, 255);
+    bottom: 0px;
+    margin-bottom: 10px;
+    
+}
+
+#todo {
+    
+    position: absolute;
+    left: 50%;
+    right: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
+    top: 70px;
+    margin-top: 10px;
+    background-color: rgb(255, 255, 255);
+    bottom: 0px;
+    margin-bottom: 10px;
+    
+}
+
+#ozadje {
+    
+    position:absolute;
+    top:0px;
+    left: 0px;
+    width:100%;
+    height:100%;
+    background-color: rgb(0, 115, 153);
+    
+}
+
+.mainButtons {
+	border: 2px solid black; 
+	border-radius: 5px; 
+	background-color: #eeeeee; 
+	font-size: 15px; 
+	margin-top: 20px; 
+	padding: 5px 10px;
+}
+
+.sideButtons {
+    border: 2px;
+    border-style: solid;
+    border-color: #ba89ff;
+    border-radius: 5px; 
+    background-color: #e9e5fe; 
+    font-size: 15px; 
+    margin-top: 20px; 
+    padding: 5px 10px;
+}
+						
+#okno { 
+	position: absolute;
+	border: 3px;
+	border-style: solid;
+	border-color: #467892;
+	top: 35%;
+    left: 35%;
+    right: 35%;
+	border-radius: 10px; 
+	background-color: #eeeeee; 
+	margin-bottom: -50%; 
+	padding: 10px;
+	text-align: center;
+}
+						
+.odgovor {
+	border: 2px solid black; 
+	width: 50%; 
+	border-radius: 10px; 
+	background-color: #eeeeee; 
+	margin-top: 20px; 
+	padding: 10px;
+}
+
+#oknoP { 
+	position: absolute;
+	border: 3px;
+	border-style: solid;
+	border-color: #bb5676;
+	top: 35%;
+    left: 35%;
+    right: 35%;
+	border-radius: 10px; 
+	background-color: #eeeeee; 
+	margin-bottom: -50%; 
+	padding: 10px;
+	text-align: center;
+}
