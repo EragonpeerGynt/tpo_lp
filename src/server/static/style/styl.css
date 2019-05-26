@@ -63,6 +63,63 @@
     
 }
 
+#ime_app {
+    
+    position: absolute;
+    margin-left: 10px;
+    top: 10px;
+    font-size: 50px;
+    font-weight: bold;
+    color: black;
+    height: 50px;
+    
+    
+}
+
+.tabula {
+    
+    position: relative;
+    left:25%;
+    right:25%;
+    top: 25%;
+    width: 50%;
+    height: 50%;
+    cursor: pointer;
+    
+}
+
+.zavihek {
+    
+    position: relative;
+    display: inline-block;
+    width: 24%;
+    height: 100%;
+    text-align: center;
+    font-weight: bold;
+    
+}
+
+.crta {
+    
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left-color: black;
+    
+}
+
+.popravek {
+    
+    font-size: 21px;
+    margin-top: 5px;
+    
+}
+
+.marked_t {
+    
+    color: rgb(153, 0, 0);
+    
+}
+
 .profile_icon {
     
     position: absolute;
@@ -86,6 +143,52 @@
     background-color: rgb(255, 255, 255);
     bottom: 45%;
     margin-bottom:10px;
+    
+}
+
+.scroll_k {
+    
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    
+}
+
+.dogodek_koledar {
+    
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: black;
+    
+}
+
+.koledar_top {
+    
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 50px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: black;
+    background-color: rgb(179, 236, 255);
+    
+}
+
+.koledar_top_gumb {
+    
+    right:100px;
+    text-align: right;
+    margin-right: 10px;
+    margin-top:auto;
+    margin-bottom: auto;
+    height: 100%;
+    padding: 15px 0;
     
 }
 
@@ -128,4 +231,109 @@
     height:100%;
     background-color: rgb(0, 115, 153);
     
+}
+
+.mainButtons {
+	border: 2px solid black; 
+	border-radius: 5px; 
+	background-color: #eeeeee; 
+	font-size: 15px; 
+	margin-top: 20px; 
+	padding: 5px 10px;
+}
+
+.sideButtons {
+    border: 2px;
+    border-style: solid;
+    border-color: #ba89ff;
+    border-radius: 5px; 
+    background-color: #e9e5fe; 
+    font-size: 15px; 
+    margin-top: 20px; 
+    padding: 5px 10px;
+}
+						
+#okno { 
+	position: absolute;
+	border: 3px;
+	border-style: solid;
+	border-color: #467892;
+	top: 35%;
+    left: 35%;
+    right: 35%;
+	border-radius: 10px; 
+	background-color: #eeeeee; 
+	margin-bottom: -50%; 
+	padding: 10px;
+	text-align: center;
+}
+						
+.odgovor {
+	border: 2px solid black; 
+	width: 50%; 
+	border-radius: 10px; 
+	background-color: #eeeeee; 
+	margin-top: 20px; 
+	padding: 10px;
+}
+
+#oknoP { 
+	position: absolute;
+	border: 3px;
+	border-style: solid;
+	border-color: #bb5676;
+	top: 35%;
+    left: 35%;
+    right: 35%;
+	border-radius: 10px; 
+	background-color: #eeeeee; 
+	margin-bottom: -50%; 
+	padding: 10px;
+	text-align: center;
+}
+
+.dropbtn {
+  position: absolute;
+  right: 0px;
+  top:0px;
+  background-color: rgba(1,1,1,0);
+  color: rgba(1,1,1,0);
+  border: none;
+  cursor: pointer;
+  height: 70px;
+  width: 70px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+  top:60px;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: rgba(1,1,1,0);
 }

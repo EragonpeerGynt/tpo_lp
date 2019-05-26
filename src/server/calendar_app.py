@@ -15,6 +15,16 @@ except NameError:
 
 app = Blueprint('calendar_app', __name__)
 
+@app.route('/add', methods=['post'])
+def koledar_pomoc():
+    try:
+        user = session['id_u']
+        datum = request.form.get('datum')
+        return redirect(url_for('calendar_app.koledar', date=datum))
+    except:
+        return redirect(url_for("index"))
+    
+
 @app.route('/add/<date>')
 def koledar(date):
     return render_template("calendar_add.html", date=date)

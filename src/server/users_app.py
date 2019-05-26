@@ -19,13 +19,13 @@ app = Blueprint('users_app', __name__)
 def registracija():
     
     #preverimo, da nihce ni prijavljen
-    id_U=0
+    id_U=-1
     try:
         id_U = session['id_u']
     except:
         id_U = -1
         
-    if id_U == -1:
+    if id_U != -1:
         return redirect(url_for("index"))
     
     if request.form['knof'] == "Prijavi se":
@@ -63,9 +63,12 @@ def registracija():
         obvestilo="Ta elektronski naslov je ze registriran."
         return render_template("register.html", napaka=obvestilo)
         
-        
+    
+    #hesiramo geslo
+    gesloo=hashlib.md5(geslo).hexdigest()
+    
     query = 'INSERT INTO `Uporabnik` (mail, geslo, status, potrjen) VALUES (%s, %s, %s, %s)'
-    cur.execute(query, (uporabnisko, geslo, 0, 0))
+    cur.execute(query, (uporabnisko, gesloo, 0, 0))
     db.commit()
     cur.close()
     
@@ -119,25 +122,45 @@ def registracija():
     
 @app.route('/register')
 def regist():
+    
+    id_U=-1
+    try:
+        id_U = session['id_u']
+    except:
+        id_U = -1
+        
+    if id_U != -1:
+        return redirect(url_for("index"))
+    
     obvestilo=""
     return render_template("register.html", napaka=obvestilo)
     
 @app.route('/preveri')
 def preveri2():
-    return redirect(url_for("index"))
+    
+    id_U=-1
+    try:
+        id_U = session['id_u']
+    except:
+        id_U = -1
+        
+    if id_U != -1:
+        return redirect(url_for("index"))
+    
+    return redirect(url_for('users_app.vpis'))
     
 @app.route('/preveri/<nekaj>')
 def preveri(nekaj):
     obvestilo=""
     
     #preverimo, da nihce ni prijavljen
-    id_U=0
+    id_U=-1
     try:
         id_U = session['id_u']
     except:
         id_U = -1
         
-    if id_U == -1:
+    if id_U != -1:
         return redirect(url_for("index"))
     
     hesh=nekaj
@@ -209,55 +232,76 @@ def preveri(nekaj):
 @app.route('/logout')
 def izpis():
     session.clear()
-    obvestilo = ""
-    return render_template("login.html", napaka=obvestilo)
+    return redirect(url_for('users_app.vpis'))
  
 @app.route('/login', methods = ['POST']) 
 def vpis():
     
+    id_U=-1
+    try:
+        id_U = session['id_u']
+    except:
+        id_U = -1
+        
+    if id_U != -1:
+        return redirect(url_for("index"))
+    
+    
+    obvestilo=""
+    
     if request.form['knof'] == "Registriraj se":
         return redirect(url_for('users_app.registracija'))
     
-    obvestilo=""
     uporabnisko = request.form['uporabnisko']
     geslo = request.form['geslo']
+    
+    gesloo=hashlib.md5(geslo).hexdigest()
+    
+    current_app.logger.error(uporabnisko);
     
     db = database.dbcon()
     cur = db.cursor()
     
     #pogledamo, ce obstaja, in uzamemo se geslo
-    table = 'SELECT geslo, id, potrjen FROM Uporabnik where mail = %s;'
+    table = 'SELECT mail FROM Uporabnik where mail = %s;'
     cur.execute(table, (uporabnisko, ))
     records = cur.fetchall()
     
-    st_takih = 1
+    current_app.logger.error(records);
     
-    try:
-        st_takih= len(records)
-    except:
-        st_takih= 0
-    
-    #ce ni takega
-    if st_takih == 0:
+    if len(records) == 0:
         obvestilo="Ta elektronski naslov se ni registriran."
         return render_template("login.html", napaka=obvestilo)
     
+    table = 'SELECT id FROM Uporabnik where mail = %s and geslo = %s and potrjen = %s;'
+    cur.execute(table, (uporabnisko, gesloo, '1', ))
+    records = cur.fetchall()
+    
     cur.close();
+    idU = 222
     
-    geslo1 = records[0][0]
-    
-    #ce je geslo napacno
-    if (geslo1 != geslo ):
+    try:
+        idU = records[0]
+    except:
         obvestilo="Napacen elektronski naslov ali geslo."
         return render_template("login.html", napaka=obvestilo)
-        
+    
     #ce je geslo vredu
-    idU = records[0][1]
     session['id_u'] = idU
             
     return redirect(url_for("index"))
     
 @app.route('/login')
 def vpis_zacetni():
+    
+    id_U=-1
+    try:
+        id_U = session['id_u']
+    except:
+        id_U = -1
+        
+    if id_U != -1:
+        return redirect(url_for("index"))
+    
     obvestilo=""
     return render_template("login.html", napaka=obvestilo)

@@ -1,7 +1,25 @@
 {% block koledar %}
 
 <div id=koledar>
-    
+    <div class=scroll_k>
+        
+        <div class=koledar_top>
+            <div class=koledar_top_gumb>
+            <form action="{{ url_for('calendar_app.koledar_pomoc') }}" method=POST>
+                <input type="date" name="datum" require/> <input type="submit" value="Dodaj">
+                
+            </form>
+            </div>
+        </div>
+        
+        {% for item in podatki_koledar %}
+            <div class=dogodek_koledar onclick="location.href ='{{ url_for("calendar_app.koledar_posodobi", id_calendar= item.id ) }}';">
+                {{ item.naziv }}<br>{{ item.datum }}
+            </div>
+        {% else %}
+            <div class=dogodek_koledar>V koledarju nimate še nobenega vnosa</div>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}

@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% extends  "status_bar.html" %}
+{% block body %}
 
+<div id= oknoP>
 <form action="{{ url_for('users_app.vpis') }}" id="potrditev_obrazec">
     <div id="napaka" style="display:none;">{{ napaka }}</div>
     
-    <input type="submit" name="knof" value="Prijavi se."/>
+    <input type="submit" name="knof" class=sideButtons value="Prijavi se."/>
     
     <script>
         //prikaz obvestila, ce je bla napaka
@@ -13,6 +14,6 @@
             document.getElementById('napaka').style.display = "block";
         }
     </script>
-<br>
+</div>
 
-</html>
+{% endblock %}
