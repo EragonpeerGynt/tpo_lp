@@ -11,11 +11,31 @@ app = Blueprint('geslo_app', __name__)
 
 @app.route('/spremembaGesla')
 def sprem():
+    
+    id_U=-1
+    try:
+        id_U = session['id_u']
+    except:
+        id_U = -1
+        
+    if id_U == -1:
+        return redirect(url_for('users_app.vpis'))
+    
     obvestilo=""
     return render_template("geslo.html", napaka=obvestilo)
 
 @app.route('/spremembaGesla', methods = ['POST'])
 def spremeni():
+    
+    id_U=-1
+    try:
+        id_U = session['id_u']
+    except:
+        id_U = -1
+        
+    if id_U == -1:
+        return redirect(url_for('users_app.vpis'))
+    
     if request.form['knof'] == "Nazaj":
         return redirect(url_for("index"))
         
@@ -25,29 +45,25 @@ def spremeni():
     geslo2 = request.form['geslo2']
     novoGeslo = request.form['novoGeslo']
     
+    if geslo1 != geslo2:
+        obvestilo="Vpisano staro geslo je napacno."
+        return render_template("geslo.html", napaka=obvestilo)
+    
     if len(novoGeslo) < 8:
         obvestilo="Geslo je prekratko."
         return render_template("geslo.html", napaka=obvestilo)
     
     #id_U= session['id_u']
-    id_U=1
     
     db = database.dbcon()
     cur = db.cursor()
     
     #pogledamo, ce obstaja, in uzamemo se geslo
-    table = 'SELECT id FROM `Uporabnik` WHERE id = %s AND geslo = %s OR geslo = %s;'
-    cur.execute(table, (id_U, geslo1, geslo2, ))
+    table = 'SELECT id FROM `Uporabnik` WHERE id = %s AND geslo = %s;'
+    cur.execute(table, (id_U, geslo1, ))
     records = cur.fetchall()
     
-    takih=0
-    
-    try:
-        takih=len(records)
-    except:
-        takih=0
-    
-    if takih == 0:
+    if len(records) == 0:
         obvestilo="Vpisano staro geslo je napacno."
         return render_template("geslo.html", napaka=obvestilo)
         

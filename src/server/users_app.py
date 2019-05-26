@@ -219,8 +219,7 @@ def preveri(nekaj):
 @app.route('/logout')
 def izpis():
     session.clear()
-    obvestilo = ""
-    return render_template("login.html", napaka=obvestilo)
+    return redirect(url_for('users_app.vpis'))
  
 @app.route('/login', methods = ['POST']) 
 def vpis():
