@@ -1,0 +1,17 @@
+{% extends  "index.html" %}
+{% block overlay %}
+
+<div id=shade></div>
+
+<div id=front_window>
+    <div class=class=smallw>
+    <h3>Confirm deletion</h3>
+    <form action="{{ url_for('urnik_app.urnik_potrdi_brisanje') }}" method="post">
+        <input type="hidden" name="id_urnik" value="{{ id_urnik }}">
+        Are you sure you want to delete this content??
+        
+        <input type="submit" name="continue" value="cancel"/>
+        <input type="submit" name="continue" value="Confirm">
+    </div>
+</div>
+{% endblock %}
