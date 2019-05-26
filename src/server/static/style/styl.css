@@ -175,3 +175,62 @@
     background-color: rgb(0, 115, 153);
     
 }
+
+.mainButtons {
+	border: 2px solid black; 
+	border-radius: 5px; 
+	background-color: #eeeeee; 
+	font-size: 15px; 
+	margin-top: 20px; 
+	padding: 5px 10px;
+}
+
+.sideButtons {
+    border: 2px;
+    border-style: solid;
+    border-color: #ba89ff;
+    border-radius: 5px; 
+    background-color: #e9e5fe; 
+    font-size: 15px; 
+    margin-top: 20px; 
+    padding: 5px 10px;
+}
+						
+#okno { 
+	position: absolute;
+	border: 3px;
+	border-style: solid;
+	border-color: #467892;
+	top: 35%;
+    left: 35%;
+    right: 35%;
+	border-radius: 10px; 
+	background-color: #eeeeee; 
+	margin-bottom: -50%; 
+	padding: 10px;
+	text-align: center;
+}
+						
+.odgovor {
+	border: 2px solid black; 
+	width: 50%; 
+	border-radius: 10px; 
+	background-color: #eeeeee; 
+	margin-top: 20px; 
+	padding: 10px;
+}
+
+#oknoP { 
+	position: absolute;
+	border: 3px;
+	border-style: solid;
+	border-color: #bb5676;
+	top: 35%;
+    left: 35%;
+    right: 35%;
+	border-radius: 10px; 
+	background-color: #eeeeee; 
+	margin-bottom: -50%; 
+	padding: 10px;
+	text-align: center;
+}

@@ -1,0 +1,32 @@
+{% extends  "status_bar.html" %}
+{% block body %}
+
+<div id= oknoP>
+
+<form action="{{ url_for('geslo_app.spremeni') }}" method="POST" id="geslo_obrazec">
+    <b><font size="5">PRIJAVA</font></b><br>
+    
+    <div id="napaka" style="display:none;">{{ napaka }}</div>
+    Staro geslo:
+    <input type="password" name="geslo1" class=odgovor placeholder="Staro geslo"><br>
+    Staro geslo:
+    <input type="password" name="geslo2" class=odgovor placeholder="Staro geslo"><br>
+    Novo geslo:
+    <input type="password" name="novoGeslo" class=odgovor placeholder="Novo geslo"><br>
+    
+    <input type="submit" name="knof" class=mainButtons value="Potrdi"/><br><br>
+    
+    <input type="submit" name="knof" class=sideButtons value="Nazaj"/>
+    
+    <script>
+        //prikaz obvestila, ce je bla napaka
+        var napaka = "{{ napaka }}"
+        if (napaka.localeCompare("") != 0) {
+            document.getElementById('napaka').style.display = "block";
+        }
+    </script>
+<br>
+
+</div>
+
+{% endblock %}
