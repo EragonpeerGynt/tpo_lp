@@ -10,7 +10,7 @@
     <form action="{{ url_for('calendar_app.koledar_potrdi') }}" method="post" class="top_border_margin">
         <input type="hidden" name="date" value="{{ date }}">
         Name: <input type="text" name="title" require/><br/>
-        Time: <input type="number" name="timeH" min="0" max="23" require/><input type="number" name="timeM" min="0" max="59" require/><br/>
+        Time: <input type="number" name="timeH" min="0" max="23" require/>:<input type="number" name="timeM" min="0" max="59" require/><br/>
         Duration: <input type="number" name="duration" require/><br/>
         Description:<br/>
         <textarea rows="10" cols="60" name="description" require></textarea><br/>

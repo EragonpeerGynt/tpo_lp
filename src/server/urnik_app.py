@@ -111,7 +111,7 @@ def urnik_posodobi_vnos():
         #dodaj za error screen
         return redirect(url_for("index"))
         
-        @app.route('/delete/<id_calendar>')
+@app.route('/delete/<id_calendar>')
 def koledar_brisanje(id_calendar):
     idU = session['id_u']
     

@@ -2,10 +2,10 @@
 # This sample data should be enough to test the parts of the site
 # which do not require a database connection
 
-dbase = 'tpolp'
-dbuser = 'eragonpeergynt'
-dbpass = ''
-dbhost = '0.0.0.0'
+dbase = 'heroku_bcbf8278618ec11'
+dbuser = 'bec9158b946774'
+dbpass = 'fa985c23'
+dbhost = 'eu-cdbr-west-02.cleardb.net'
 
 timestamp_public = "cert.pem"
 timestamp_private = "key.pem"
