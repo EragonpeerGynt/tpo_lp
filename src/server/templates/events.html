@@ -10,12 +10,14 @@
         <div class=dogodek_koledar>V koledarju nimate še nobenega vnosa</div>
     {% endfor %}
 </div>
-
-{% if status != 0 %}
+{{ status }}
+{% for stat in status %}
+{% if stat == 1 %}
 <div id="nov_dogodek" onclick="location.href ='{{ url_for("event_app.vnesi_podatke_nov") }}';">
     
 </div>
 {% endif %}
+{% endfor %}
 
 {% block overlay %}
 {% endblock %}

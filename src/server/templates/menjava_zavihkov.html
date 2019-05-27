@@ -19,7 +19,7 @@
         ">Food</div>
     </div>
     
-    <div class="zavihek crta" onclick="location.href ='{{ url_for("index") }}';">
+    <div class="zavihek crta" onclick="location.href ='{{ url_for("event_app.zacetna_stran") }}';">
         <div class="popravek 
         {% if request.url == url_for('event_app.zacetna_stran', _external=True) %}
         marked_t

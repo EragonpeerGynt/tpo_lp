@@ -83,6 +83,7 @@ def registracija():
     hesh=hashlib.md5(vsebina).hexdigest()
     
     sporocilo = url_for('users_app.preveri2',  _external=True)+"/"+uporabnisko+"<>"+hesh
+    current_app.logger.error(sporocilo)
     
     #naredimo mail
     #from_addr = 'info.straightas@yandex.com'

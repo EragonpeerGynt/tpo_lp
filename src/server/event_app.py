@@ -36,6 +36,7 @@ def zacetna_stran():
     except:
         return redirect( url_for('index') )
         
+        
     cur = db.cursor()
     query = 'SELECT id, ime, datum FROM `dogodek`'
     cur.execute(query, ())
