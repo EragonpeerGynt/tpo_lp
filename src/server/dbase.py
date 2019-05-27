@@ -1,5 +1,6 @@
 import auth
 import MySQLdb
+from os import environ
 
 class DummyCursor:
     def close(self):
@@ -35,8 +36,8 @@ class Database:
             try:
                 self.db.ping()
             except:
-                self.db = MySQLdb.connect(host=auth.dbhost, user=auth.dbuser,
-                                            passwd=auth.dbpass, db=auth.dbase,
+                self.db = MySQLdb.connect(host=auth.dbhost, user=environ.get(auth.dbuser),
+                                            passwd=environ.get(auth.dbpass), db=auth.dbase,
                                             charset = 'utf8', use_unicode = True)
         except MySQLdb.OperationalError:
             return self.dummy

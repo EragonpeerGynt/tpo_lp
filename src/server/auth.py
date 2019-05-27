@@ -3,8 +3,8 @@
 # which do not require a database connection
 
 dbase = 'heroku_bcbf8278618ec11'
-dbuser = 'bec9158b946774'
-dbpass = 'fa985c23'
+dbuser = 'DATABASE_USERNAME'
+dbpass = 'DATABASE_PASSWORD'
 dbhost = 'eu-cdbr-west-02.cleardb.net'
 
 timestamp_public = "cert.pem"
